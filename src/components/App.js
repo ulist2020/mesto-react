@@ -1,8 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
+import '../index.css';
 
 function App() {
   return (
+    <div className="page">
     <div className="page__container">
     <header className="header">
       <div className="header__logo" />
@@ -78,6 +78,7 @@ function App() {
         <button className="popup__button" type="submit" aria-label="Сохранить">Сохранить</button>
       </form>
     </div>
+  </div>
   </div>
     
   );
