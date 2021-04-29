@@ -1,6 +1,6 @@
 import '../index.css';
 import Header from './Header';
-import Mine from './Mine';
+import Main from './Main';
 import Footer from './Footer';
 
 function App() {
@@ -9,9 +9,9 @@ function App() {
     <div className="page__container">
 
     <Header />
-    <Mine />
+    <Main />
     <Footer />
-    
+
     <template id="photo-template" />
     <div className="popup" id="popup-author"> 
       <form className="popup__container" method="POST" name="PopupAuthorForm" noValidate>
