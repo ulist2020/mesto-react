@@ -1,37 +1,17 @@
 import '../index.css';
+import Header from './Header';
+import Mine from './Mine';
+import Footer from './Footer';
 
 function App() {
   return (
     <div className="page">
     <div className="page__container">
-    <header className="header">
-      <div className="header__logo" />
-    </header>
-    <main className="content">
-      <section className="profile">
-        <div className="profile__flex">
-          <div className="profile__container-avatar">
-            <img className="profile__avatar" src="#" alt="Аватарка" />
-            <button className="profile__avatar-update" type="button" aria-label="Редактировать аватар" />
-          </div>
-          <div className="profile__info">
-            <div className="profile__edit">
-              <h1 className="profile__edit-author" />
-              <button className="profile__edit-button" type="button" aria-label="Редактирование профиля" />
-            </div>
-            <h2 className="profile__profession" />
-          </div>
-        </div>    
-        <button className="profile__button" type="button" aria-label="Добавить фотографии" />
-      </section>
-      <section className="photo">
-        <ul className="photo__grid">
-        </ul>
-      </section>
-    </main>
-    <footer className="footer">
-      <p className="footer__mesto">© 2021 Mesto Russia</p>
-    </footer>
+
+    <Header />
+    <Mine />
+    <Footer />
+    
     <template id="photo-template" />
     <div className="popup" id="popup-author"> 
       <form className="popup__container" method="POST" name="PopupAuthorForm" noValidate>
