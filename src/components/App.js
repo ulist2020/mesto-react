@@ -1,3 +1,4 @@
+import React from 'react';
 import '../index.css';
 import Header from './Header';
 import Main from './Main';
@@ -5,22 +6,38 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 
+
 function App() {
   
+  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = React.useState(false);
+
+  function handleEditAvatarClick() {
+    setisEditAvatarPopupOpen(true);
+  }
+  function handleEditProfileClick() {
+    setEditProfilePopupOpen(true);
+  }
+  function handleAddPlaceClick() {
+   setisAddPlacePopupOpen(true);
+  }
+
   return (
     <div className="page">
       <div className="page__container">
 
         <Header />
-        <Main />
+        <Main  onEditAvatar={()=> handleEditAvatarClick()} onEditProfile={()=> handleEditProfileClick()} onAddPlace={()=> handleAddPlaceClick()} />
         <Footer />
 
         <template id="photo-template" />
-        
+
         <PopupWithForm 
           name="popup-author" 
           title="Редактировать профиль"
           button="Сохранить" 
+          isOpen={isEditProfilePopupOpen}
         >
             <input id="popup__name-author" className="popup__input" type="text" placeholder="Имя" name="author" minLength={2} maxLength={40} required />
             <span className="popup__name-author-error popup__error" />
@@ -31,7 +48,8 @@ function App() {
         <PopupWithForm 
           name="popup-addimage" 
           title="Новое место"
-          button="Создать" 
+          button="Создать"
+          isOpen={isAddPlacePopupOpen} 
         >
             <input id="popup__name" className="popup__input" type="text" placeholder="Название" name="name" minLength={2} maxLength={30} required />
             <span className="popup__name-error popup__error" />
@@ -43,6 +61,7 @@ function App() {
           name="popup-update-avatar" 
           title="Обновить аватар" 
           button="Сохранить"
+          isOpen={isEditAvatarPopupOpen}
         >
             <input id="popup__link-avatar" className="popup__input" type="url" placeholder="Ссылка" name="avatar" required />
             <span className="popup__link-avatar-error popup__error" />
