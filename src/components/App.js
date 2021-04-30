@@ -20,8 +20,14 @@ function App() {
     setEditProfilePopupOpen(true);
   }
   function handleAddPlaceClick() {
-   setisAddPlacePopupOpen(true);
-  }
+    setisAddPlacePopupOpen(true);
+   }
+   
+  function closeAllPopups() {
+    setisEditAvatarPopupOpen(false);
+    setEditProfilePopupOpen(false);
+    setisAddPlacePopupOpen(false);
+   }
 
   return (
     <div className="page">
@@ -38,6 +44,7 @@ function App() {
           title="Редактировать профиль"
           button="Сохранить" 
           isOpen={isEditProfilePopupOpen}
+          onClose={()=> closeAllPopups()}
         >
             <input id="popup__name-author" className="popup__input" type="text" placeholder="Имя" name="author" minLength={2} maxLength={40} required />
             <span className="popup__name-author-error popup__error" />
@@ -49,7 +56,8 @@ function App() {
           name="popup-addimage" 
           title="Новое место"
           button="Создать"
-          isOpen={isAddPlacePopupOpen} 
+          isOpen={isAddPlacePopupOpen}
+          onClose={()=> closeAllPopups()} 
         >
             <input id="popup__name" className="popup__input" type="text" placeholder="Название" name="name" minLength={2} maxLength={30} required />
             <span className="popup__name-error popup__error" />
@@ -62,6 +70,7 @@ function App() {
           title="Обновить аватар" 
           button="Сохранить"
           isOpen={isEditAvatarPopupOpen}
+          onClose={()=> closeAllPopups()}
         >
             <input id="popup__link-avatar" className="popup__input" type="url" placeholder="Ссылка" name="avatar" required />
             <span className="popup__link-avatar-error popup__error" />
