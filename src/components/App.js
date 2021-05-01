@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../index.css';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import api from '../utils/Api';
+
 
 
 function App() {
@@ -22,19 +24,38 @@ function App() {
   function handleAddPlaceClick() {
     setisAddPlacePopupOpen(true);
    }
-   
+
   function closeAllPopups() {
     setisEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setisAddPlacePopupOpen(false);
    }
 
+   const [user, setUser] = useState([])
+   useEffect(() => {
+    api.getUser()
+    .then((results) => {
+      setUser({
+        name:results.name,
+        description: results.about,
+        avatar: results.avatar
+      })
+    })
+  },[])
+
+
   return (
     <div className="page">
       <div className="page__container">
 
         <Header />
-        <Main  onEditAvatar={()=> handleEditAvatarClick()} onEditProfile={()=> handleEditProfileClick()} onAddPlace={()=> handleAddPlaceClick()} />
+        <Main  onEditAvatar={()=> handleEditAvatarClick()} 
+              onEditProfile={()=> handleEditProfileClick()} 
+              onAddPlace={()=> handleAddPlaceClick()}
+              userAvatar = {user.avatar}
+              userName = {user.name}
+              userDescription = {user.description} 
+             />
         <Footer />
 
         <template id="photo-template" />
