@@ -6,6 +6,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import api from '../utils/Api';
+import Card from './Card';
 
 
 
@@ -14,6 +15,9 @@ function App() {
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = React.useState(false);
+
+  const [user, setUser] = useState([]);
+  const [cards, setCards] = useState([])
 
   function handleEditAvatarClick() {
     setisEditAvatarPopupOpen(true);
@@ -31,24 +35,34 @@ function App() {
     setisAddPlacePopupOpen(false);
    }
 
-   const [user, setUser] = useState([])
    useEffect(() => {
     api.getUser()
     .then((results) => {
-      setUser({
+      setUser(
+        {
         name:results.name,
         description: results.about,
         avatar: results.avatar
-      })
+      });
+      console.log("Avatar settings call");
     })
   },[])
 
+  useEffect(() => {
+    api.getInitialCards()
+    .then((results) => {
+      setCards(results);
+      console.log(results);
+    })
+  },[])
 
   return (
     <div className="page">
       <div className="page__container">
 
+
         <Header />
+        
         <Main  onEditAvatar={()=> handleEditAvatarClick()} 
               onEditProfile={()=> handleEditProfileClick()} 
               onAddPlace={()=> handleAddPlaceClick()}
@@ -56,9 +70,15 @@ function App() {
               userName = {user.name}
               userDescription = {user.description} 
              />
+                
+        <section className="photo">
+          <ul className="photo__grid">
+          {cards.map((card) => <Card link={card.link} name={card.name} likes={card.likes.length} />)}
+          
+          </ul>
+       </section>
+     
         <Footer />
-
-        <template id="photo-template" />
 
         <PopupWithForm 
           name="popup-author" 

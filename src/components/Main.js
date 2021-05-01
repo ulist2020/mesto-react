@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 function Main(props) {
       
   return (
@@ -20,10 +19,6 @@ function Main(props) {
         </div>
       </div>    
       <button onClick={props.onAddPlace} className="profile__button" type="button" aria-label="Добавить фотографии" />
-    </section>
-    <section className="photo">
-      <ul className="photo__grid">
-      </ul>
     </section>
   </main>
   );
