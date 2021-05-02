@@ -3,12 +3,10 @@ import React from 'react';
 function Card(props) {
 
      function handleClick() {
-
         props.onCardClick(props.name,props.link);
       } 
-       
   return (
-    <li onClick={handleClick} className="photo__card">
+    <li  onClick={handleClick} className="photo__card">
     <div className="photo__card-place" style={{ backgroundImage: `url(${props.link})` }}/>
     <button className="photo__delete-icon" type="button" aria-label="Удалить фото" />
     <div className="photo__flex">

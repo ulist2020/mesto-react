@@ -60,7 +60,6 @@ function App() {
     api.getInitialCards()
     .then((results) => {
       setCards(results);
-      console.log(results);
     })
   },[])
 
@@ -75,9 +74,10 @@ function App() {
               onAddPlace={()=> handleAddPlaceClick()}
               userAvatar = {user.avatar}
               userName = {user.name}
-              userDescription = {user.description} 
+              userDescription = {user.description}
              >
-              {cards.map((card) => <Card 
+              {cards.map((card) => <Card
+                key={card._id}
                 onCardClick = {handleCardClick} 
                 link={card.link} 
                 name={card.name} 
@@ -89,7 +89,6 @@ function App() {
         <PopupWithForm 
           name="popup-author" 
           title="Редактировать профиль"
-          button="Сохранить" 
           isOpen={isEditProfilePopupOpen}
           onClose={()=> closeAllPopups()}
         >
@@ -102,7 +101,6 @@ function App() {
         <PopupWithForm 
           name="popup-addimage" 
           title="Новое место"
-          button="Создать"
           isOpen={isAddPlacePopupOpen}
           onClose={()=> closeAllPopups()} 
         >
@@ -115,7 +113,6 @@ function App() {
         <PopupWithForm 
           name="popup-update-avatar" 
           title="Обновить аватар" 
-          button="Сохранить"
           isOpen={isEditAvatarPopupOpen}
           onClose={()=> closeAllPopups()}
         >
