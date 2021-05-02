@@ -7,7 +7,7 @@ function Main(props) {
     <section className="profile">
       <div className="profile__flex">
         <div className="profile__container-avatar">
-          <img className="profile__avatar" src={props.userAvatar} alt="Аватарка" />
+          <div className="profile__avatar" style={{ backgroundImage: `url(${props.userAvatar})` }}  alt="Аватарка" />
           <button onClick={props.onEditAvatar} className="profile__avatar-update" type="button" aria-label="Редактировать аватар" />
         </div>
         <div className="profile__info">
@@ -20,6 +20,12 @@ function Main(props) {
       </div>    
       <button onClick={props.onAddPlace} className="profile__button" type="button" aria-label="Добавить фотографии" />
     </section>
+    <section className="photo">
+      <ul className="photo__grid">
+        {props.children}
+      </ul>
+    </section>
+
   </main>
   );
 }

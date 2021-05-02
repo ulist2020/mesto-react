@@ -8,16 +8,16 @@ import ImagePopup from './ImagePopup';
 import api from '../utils/Api';
 import Card from './Card';
 
-
-
 function App() {
   
-  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = useState(false);
+
+  const [selectedCard, setSelectedCard] = useState({link:'',name:'',isOpen: false});
 
   const [user, setUser] = useState([]);
-  const [cards, setCards] = useState([])
+  const [cards, setCards] = useState([]);
 
   function handleEditAvatarClick() {
     setisEditAvatarPopupOpen(true);
@@ -29,10 +29,19 @@ function App() {
     setisAddPlacePopupOpen(true);
    }
 
+   function handleCardClick(name,link) {
+    setSelectedCard({
+      name: name,
+      link: link,
+      isOpen: true
+    });
+   }
+
   function closeAllPopups() {
     setisEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setisAddPlacePopupOpen(false);
+    setSelectedCard({link:'',name:'',isOpen: false})
    }
 
    useEffect(() => {
@@ -44,7 +53,6 @@ function App() {
         description: results.about,
         avatar: results.avatar
       });
-      console.log("Avatar settings call");
     })
   },[])
 
@@ -60,7 +68,6 @@ function App() {
     <div className="page">
       <div className="page__container">
 
-
         <Header />
         
         <Main  onEditAvatar={()=> handleEditAvatarClick()} 
@@ -69,15 +76,14 @@ function App() {
               userAvatar = {user.avatar}
               userName = {user.name}
               userDescription = {user.description} 
-             />
+             >
+              {cards.map((card) => <Card 
+                onCardClick = {handleCardClick} 
+                link={card.link} 
+                name={card.name} 
+                likes={card.likes.length}/>)}
+        </Main>
                 
-        <section className="photo">
-          <ul className="photo__grid">
-          {cards.map((card) => <Card link={card.link} name={card.name} likes={card.likes.length} />)}
-          
-          </ul>
-       </section>
-     
         <Footer />
 
         <PopupWithForm 
@@ -124,7 +130,11 @@ function App() {
         >
         </PopupWithForm>
 
-        <ImagePopup />
+        <ImagePopup
+        card={selectedCard}
+        isOpen={selectedCard.isOpen}
+        onClose={()=> closeAllPopups()} 
+        />
 
       </div>
     </div>
@@ -134,68 +144,3 @@ function App() {
 
 export default App;
 
-/*<div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-    
-    <div className="popup" id="popup-author"> 
-      <form className="popup__container" method="POST" name="PopupAuthorForm" noValidate>
-        <button className="popup__close-button" type="reset" aria-label="Закрыть окно редактирования" />
-        <h3 className="popup__header">Редактировать профиль</h3>
-        <input id="popup__name-author" className="popup__input" type="text" placeholder="Имя" name="author" minLength={2} maxLength={40} required />
-        <span className="popup__name-author-error popup__error" />
-        <input id="popup__link-author" className="popup__input" type="text" placeholder="О себе" name="profession" minLength={2} maxLength={200} required />
-        <span className="popup__link-author-error popup__error" />
-        <button className="popup__button" type="submit" aria-label="Сохранить">Сохранить</button>
-      </form>
-    </div>
-    <div className="popup" id="popup-addimage"> 
-      <form className="popup__container" method="POST" name="PopupAddimageForm" noValidate>
-        <button className="popup__close-button" type="reset" aria-label="Закрыть окно" />
-        <h3 className="popup__header">Новое место</h3>
-        <input id="popup__name" className="popup__input" type="text" placeholder="Название" name="name" minLength={2} maxLength={30} required />
-        <span className="popup__name-error popup__error" />
-        <input id="popup__link" className="popup__input" type="url" placeholder="Ссылка" name="link" required />
-        <span className="popup__link-error popup__error" />
-        <button className="popup__button" type="submit" aria-label="Сохранить">Создать</button>
-      </form>
-    </div>
-    <div className="popup" id="popup-update-avatar"> 
-      <form className="popup__container popup__update-container" method="POST" name="PopupUpdateAvatar" noValidate>
-        <button className="popup__close-button" type="reset" aria-label="Закрыть окно" />
-        <h3 className="popup__header">Обновить аватар</h3>
-        <input id="popup__link-avatar" className="popup__input" type="url" placeholder="Ссылка" name="avatar" required />
-        <span className="popup__link-avatar-error popup__error" />
-        <button className="popup__button" type="submit" aria-label="Сохранить">Сохранить</button>
-      </form>
-    </div>
-    <div className="popup" id="popup-confirm">
-      <form className="popup__confirm-container" method="POST" name="PopupConfirm">
-        <button className="popup__close-button" type="reset" aria-label="Закрыть окно" />
-        <h3 className="popup__header">Вы уверены?</h3>
-        <button className="popup__button" type="submit" aria-label="Да">Да</button>
-      </form>   
-    </div>
-    <div className="popup" id="popup-image">
-      <div className="popup__block">
-        <button className="popup__close-button" type="reset" aria-label="Закрыть фотографию" />
-        <img className="popup__image" src="#" alt="#" />
-        <p className="popup__description" />
-      </div>
-    </div>
-
-    
-    */
