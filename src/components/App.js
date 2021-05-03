@@ -135,7 +135,7 @@ function App() {
         <ImagePopup
         card={selectedCard}
         isOpen={selectedCard.isOpen}
-        onClose={()=> closeAllPopups()} 
+        onClose={closeAllPopups} 
         />
 
       </div>
