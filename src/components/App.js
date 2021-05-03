@@ -16,7 +16,7 @@ function App() {
 
   const [selectedCard, setSelectedCard] = useState({link:'',name:'',isOpen: false});
 
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});;
   const [cards, setCards] = useState([]);
 
   function handleEditAvatarClick() {
@@ -54,12 +54,18 @@ function App() {
         avatar: results.avatar
       });
     })
+    .catch((err) => {
+      console.log(err); 
+    })
   },[])
 
   useEffect(() => {
     api.getInitialCards()
     .then((results) => {
       setCards(results);
+    })
+    .catch((err) => {
+      console.log(err); 
     })
   },[])
 
@@ -69,9 +75,9 @@ function App() {
 
         <Header />
         
-        <Main  onEditAvatar={()=> handleEditAvatarClick()} 
-              onEditProfile={()=> handleEditProfileClick()} 
-              onAddPlace={()=> handleAddPlaceClick()}
+        <Main  onEditAvatar={handleEditAvatarClick} 
+              onEditProfile={handleEditProfileClick} 
+              onAddPlace={handleAddPlaceClick}
               userAvatar = {user.avatar}
               userName = {user.name}
               userDescription = {user.description}
@@ -90,7 +96,7 @@ function App() {
           name="popup-author" 
           title="Редактировать профиль"
           isOpen={isEditProfilePopupOpen}
-          onClose={()=> closeAllPopups()}
+          onClose={closeAllPopups}
         >
             <input id="popup__name-author" className="popup__input" type="text" placeholder="Имя" name="author" minLength={2} maxLength={40} required />
             <span className="popup__name-author-error popup__error" />
@@ -102,7 +108,7 @@ function App() {
           name="popup-addimage" 
           title="Новое место"
           isOpen={isAddPlacePopupOpen}
-          onClose={()=> closeAllPopups()} 
+          onClose={closeAllPopups} 
         >
             <input id="popup__name" className="popup__input" type="text" placeholder="Название" name="name" minLength={2} maxLength={30} required />
             <span className="popup__name-error popup__error" />
@@ -114,7 +120,7 @@ function App() {
           name="popup-update-avatar" 
           title="Обновить аватар" 
           isOpen={isEditAvatarPopupOpen}
-          onClose={()=> closeAllPopups()}
+          onClose={closeAllPopups}
         >
             <input id="popup__link-avatar" className="popup__input" type="url" placeholder="Ссылка" name="avatar" required />
             <span className="popup__link-avatar-error popup__error" />
@@ -123,7 +129,6 @@ function App() {
         <PopupWithForm 
           name="popup-confirm" 
           title="Вы уверены?"
-          button="Да"
         >
         </PopupWithForm>
 
@@ -135,7 +140,6 @@ function App() {
 
       </div>
     </div>
-    
   );
 }
 
