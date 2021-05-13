@@ -7,6 +7,7 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import api from '../utils/Api';
 import Card from './Card';
+import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
 function App() {
   
@@ -16,8 +17,10 @@ function App() {
 
   const [selectedCard, setSelectedCard] = useState({link:'',name:'',isOpen: false});
 
-  const [user, setUser] = useState({});;
+  //const [user, setUser] = useState({});
   const [cards, setCards] = useState([]);
+
+  const [currentUser, setcurrentUser] = useState({});
 
   function handleEditAvatarClick() {
     setisEditAvatarPopupOpen(true);
@@ -47,10 +50,11 @@ function App() {
    useEffect(() => {
     api.getUser()
     .then((results) => {
-      setUser(
+    //  console.log(results.about)
+      setcurrentUser(
         {
-        name:results.name,
-        description: results.about,
+        name: results.name,
+        about: results.about,
         avatar: results.avatar
       });
     })
@@ -70,6 +74,7 @@ function App() {
   },[])
 
   return (
+    <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
       <div className="page__container">
 
@@ -78,9 +83,9 @@ function App() {
         <Main  onEditAvatar={handleEditAvatarClick} 
               onEditProfile={handleEditProfileClick} 
               onAddPlace={handleAddPlaceClick}
-              userAvatar = {user.avatar}
-              userName = {user.name}
-              userDescription = {user.description}
+            //  userAvatar = {user.avatar}
+            //  userName = {user.name}
+             // userDescription = {currentUser.description}
              >
               {cards.map((card) => <Card
                 key={card._id}
@@ -140,6 +145,7 @@ function App() {
 
       </div>
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 

@@ -1,21 +1,23 @@
 import React from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
 function Main(props) {
+  const userContext = React.useContext(CurrentUserContext);
       
   return (
     <main className="content">
     <section className="profile">
       <div className="profile__flex">
         <div className="profile__container-avatar">
-          <div className="profile__avatar" style={{ backgroundImage: `url(${props.userAvatar})` }}  alt="Аватарка" />
+          <div className="profile__avatar" style={{ backgroundImage: `url(${userContext.avatar})` }}  alt="Аватарка" />
           <button onClick={props.onEditAvatar} className="profile__avatar-update" type="button" aria-label="Редактировать аватар" />
         </div>
         <div className="profile__info">
           <div className="profile__edit">
-            <h1 className="profile__edit-author">{props.userName}</h1>
+            <h1 className="profile__edit-author">{userContext.name}</h1>
             <button onClick={props.onEditProfile} className="profile__edit-button" type="button" aria-label="Редактирование профиля" />
           </div>
-          <h2 className="profile__profession">{props.userDescription}</h2>
+          <h2 className="profile__profession">{userContext.about}</h2>
         </div>
       </div>    
       <button onClick={props.onAddPlace} className="profile__button" type="button" aria-label="Добавить фотографии" />
