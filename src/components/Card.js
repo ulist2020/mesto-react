@@ -25,12 +25,15 @@ function Card(props) {
       function handleLikeClick() {
         props.onCardLike(props.card);
       } 
+      function handleDeleteClick() {
+        props.onCardDelete(props.card);
+      } 
 
       
   return (
     <li   className="photo__card">
     <div onClick={handleClick} className="photo__card-place" style={{ backgroundImage: `url(${props.link})` }}/>
-    <button className={cardDeleteButtonClassName} type="button" aria-label="Удалить фото" />
+    <button className={cardDeleteButtonClassName} onClick={handleDeleteClick} type="button" aria-label="Удалить фото" />
     <div className="photo__flex">
       <h2 className="photo__card-discprition">{props.name}</h2>
       <div className="photo__like-container">

@@ -99,7 +99,6 @@
                 },
         })
         .then(this._checkResponse)
-        console.log(this._checkResponse)
     }
     
 
@@ -124,8 +123,6 @@
 
     changeLikeCardStatus(cardId, isLiked){
         if(isLiked){
-            console.log(cardId)
-            console.log(isLiked)
             return this.addLike(cardId)
         }
         else{
