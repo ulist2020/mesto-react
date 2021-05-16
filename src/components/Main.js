@@ -1,5 +1,8 @@
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
+import Card from './Card';
+
+
 
 function Main(props) {
   const userContext = React.useContext(CurrentUserContext);
@@ -23,7 +26,18 @@ function Main(props) {
     </section>
     <section className="photo">
       <ul className="photo__grid">
-        {props.children}
+        {props.cards.map((card)=>
+          (<Card
+              //onCardLike={handleCardLike}
+              key={card._id}
+              link={card.link} 
+              name={card.name} 
+              likes={card.likes.length}
+              card={card}
+              //onCardClick = {handleCardClick}
+              onCardClick={props.onCardClick} 
+          />)
+        )}
       </ul>
     </section>
 

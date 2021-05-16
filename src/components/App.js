@@ -6,9 +6,8 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import api from '../utils/Api';
-import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { CurrentCardsContext } from '../contexts/CurrentCardsContext';
+//import { CurrentCardsContext } from '../contexts/CurrentCardsContext';
 
 function App() {
   
@@ -19,10 +18,10 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({link:'',name:'',isOpen: false});
 
   //const [user, setUser] = useState({});
- // const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState([]);
 
   const [currentUser, setCurrentUser] = useState({});
-  const [currentCards, setCurrentCards] = useState([]);
+ // const [currentCards, setCurrentCards] = useState([]);
 
   function handleEditAvatarClick() {
     setisEditAvatarPopupOpen(true);
@@ -49,7 +48,7 @@ function App() {
     setSelectedCard({link:'',name:'',isOpen: false})
    }
 
-   useEffect(() => {
+ /*  useEffect(() => {
     api.getUser()
     .then((results) => {
       setCurrentUser(
@@ -71,9 +70,7 @@ function App() {
           ); 
           card.cardDeleteButtonClassName = cardDeleteButtonClassName;
 
-          // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
           const isLiked = card.likes.some(i => i._id === userId);
-          // Создаём переменную, которую после зададим в `className` для кнопки лайка
           const cardLikeButtonClassName = (
             `photo__card-like ${isLiked ? 'photo__card-like_active' : 'photo__card-like'}`);
           card.cardLikeButtonClassName = cardLikeButtonClassName;
@@ -88,11 +85,51 @@ function App() {
     .catch((err) => {
       console.log(err); 
     })
+  },[])*/
+
+  useEffect(() => {
+    api.getUser()
+    .then((results) => {
+      setCurrentUser(
+        {
+          _id: results._id,
+          name: results.name,
+          about: results.about,
+          avatar: results.avatar
+      })
+     // .catch((err) => {
+      //  console.log(err); 
+      //})
+    })
   },[])
 
-  // useEffect(() => {
-  // },[])
-  
+  useEffect(() => {
+    api.getInitialCards()
+    .then((results) => {
+      setCards(results)
+       // .catch((err) => {
+        //  console.log(err); 
+       // })
+    })
+  },[])
+      
+
+
+
+ /* function handleCardLike(card) {
+    
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    console.log(isLiked)
+    
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      //console.log(newCard)
+      setCurrentCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
+    });
+    
+  }  */ 
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
@@ -103,28 +140,9 @@ function App() {
             <Main onEditAvatar={handleEditAvatarClick} 
                   onEditProfile={handleEditProfileClick} 
                   onAddPlace={handleAddPlaceClick}
-                //  userAvatar = {user.avatar}
-                //  userName = {user.name}
-                // userDescription = {currentUser.description}
+                  cards={cards}
+                  onCardClick={handleCardClick}
             >
-              {
-              
-                currentCards.map((card) => 
-                  <>
-                    <CurrentCardsContext.Provider value={card} > 
-                      <Card
-                          key={card._id}
-                          //onCardClick = {handleCardClick} 
-                          //link={card.link} 
-                          //name={card.name} 
-                          //likes={card.likes.length}
-                        />
-                    </CurrentCardsContext.Provider>
-                  </>
-     
-                  )
-              }
-
             </Main>
                     
             <Footer />

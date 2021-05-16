@@ -99,7 +99,9 @@
                 },
         })
         .then(this._checkResponse)
+        console.log(this._checkResponse)
     }
+    
 
     //Удаление лайка
     removeLike(id){
@@ -120,6 +122,18 @@
         return Promise.reject(`Ошибка ${res.status}`);
     }
 
+    changeLikeCardStatus(cardId, isLiked){
+        if(isLiked){
+            console.log(cardId)
+            console.log(isLiked)
+            return this.addLike(cardId)
+        }
+        else{
+            console.log(cardId)
+            console.log(isLiked)
+             return this.removeLike(cardId)   
+        }
+    }
 }
 
 const api = new Api({
