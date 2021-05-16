@@ -1,16 +1,8 @@
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
-//import { CurrentCardsContext } from '../contexts/CurrentCardsContext'
 
 function Main(props) {
   const userContext = React.useContext(CurrentUserContext);
-  //const cardsContext = React.useContext(CurrentCardsContext);
-  //const isOwn = cardsContext.owner._id === userContext._id;
-                             // Определяем, являемся ли мы владельцем текущей карточки
-//
-//console.log(isOwn)
-  
-  console.log(userContext) 
   return (
     <main className="content">
     <section className="profile">

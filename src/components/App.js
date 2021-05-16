@@ -70,6 +70,13 @@ function App() {
             `photo__delete-icon ${isOwn ? '' : 'photo__delete-icon_hidden'}`
           ); 
           card.cardDeleteButtonClassName = cardDeleteButtonClassName;
+
+          // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
+          const isLiked = card.likes.some(i => i._id === userId);
+          // Создаём переменную, которую после зададим в `className` для кнопки лайка
+          const cardLikeButtonClassName = (
+            `photo__card-like ${isLiked ? 'photo__card-like_active' : 'photo__card-like'}`);
+          card.cardLikeButtonClassName = cardLikeButtonClassName;
         })
         setCurrentCards(results);
       })

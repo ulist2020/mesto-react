@@ -17,7 +17,7 @@ function Card(props) {
     <div className="photo__flex">
       <h2 className="photo__card-discprition">{cardsContext.name}</h2>
       <div className="photo__like-container">
-        <button className="photo__card-like" type="button" aria-label="Поставить лайк" />
+        <button className={cardsContext.cardLikeButtonClassName} type="button" aria-label="Поставить лайк" />
         <p className="photo__like-counter" >{cardsContext.likes.length}</p>
       </div>
     </div>
