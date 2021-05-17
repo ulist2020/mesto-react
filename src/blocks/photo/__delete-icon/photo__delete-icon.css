@@ -12,6 +12,10 @@
    
 }
 
+.photo__delete-icon_hidden{
+    visibility: hidden; 
+}
+
 .photo__delete-icon:hover{
     opacity: 0.5;
 }

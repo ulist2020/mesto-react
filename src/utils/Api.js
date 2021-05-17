@@ -28,7 +28,7 @@
     }
 
     //Редактирование профиля
-    editUser(data){
+    editUser({ name, about }){
         return fetch(`${this._address}/users/me`, {
             method: 'PATCH',
             headers: {
@@ -36,8 +36,8 @@
                 'Content-Type': this._format
             },
             body: JSON.stringify({
-                name: data.author,
-                about: data.profession
+                name,
+                about
             })
     })
     .then(this._checkResponse)
@@ -45,7 +45,7 @@
     }
 
     //Редактирование аватара
-    editAvatar(data){
+    editAvatar({avatar}){
         return fetch(`${this._address}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
@@ -53,7 +53,7 @@
                 'Content-Type': this._format
             },
             body: JSON.stringify({
-                avatar: data
+                avatar
             })
     })
     .then(this._checkResponse)
@@ -61,7 +61,7 @@
     }
 
     //Добавление новой карточки
-    addCard(data){
+    addCard({ name, link }){
         return fetch(`${this._address}/cards`, {
             method: 'POST',
             headers: {
@@ -69,8 +69,8 @@
                 'Content-Type': this._format
             },
             body: JSON.stringify({
-                name: data.name,
-                link: data.link
+                name,
+                link
             })
     })
     .then(this._checkResponse)
@@ -111,15 +111,24 @@
                 },
         })
         .then(this._checkResponse)
+    }  
 
+    //Добавление и удаление лайков
+    changeLikeCardStatus(cardId, isLiked){
+        if(isLiked){
+            return this.addLike(cardId)
+        }
+        else{
+             return this.removeLike(cardId)   
+        }
     }
+
     _checkResponse(res) {
         if (res.ok) {
             return res.json();
         }
         return Promise.reject(`Ошибка ${res.status}`);
     }
-
 }
 
 const api = new Api({
