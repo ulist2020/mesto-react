@@ -61,7 +61,7 @@
     }
 
     //Добавление новой карточки
-    addCard(data){
+    addCard({ name, link }){
         return fetch(`${this._address}/cards`, {
             method: 'POST',
             headers: {
@@ -69,8 +69,8 @@
                 'Content-Type': this._format
             },
             body: JSON.stringify({
-                name: data.name,
-                link: data.link
+                name,
+                link
             })
     })
     .then(this._checkResponse)
@@ -111,24 +111,23 @@
                 },
         })
         .then(this._checkResponse)
+    }  
 
-    }
-    _checkResponse(res) {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-    }
     //Добавление и удаление лайков
     changeLikeCardStatus(cardId, isLiked){
         if(isLiked){
             return this.addLike(cardId)
         }
         else{
-            console.log(cardId)
-            console.log(isLiked)
              return this.removeLike(cardId)   
         }
+    }
+
+    _checkResponse(res) {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
     }
 }
 
