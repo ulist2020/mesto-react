@@ -8,6 +8,7 @@ import ImagePopup from './ImagePopup';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
   
@@ -17,11 +18,9 @@ function App() {
 
   const [selectedCard, setSelectedCard] = useState({link:'',name:'',isOpen: false});
 
-  //const [user, setUser] = useState({});
   const [cards, setCards] = useState([]);
 
   const [currentUser, setCurrentUser] = useState({});
- // const [currentCards, setCurrentCards] = useState([]);
 
   function handleEditAvatarClick() {
     setisEditAvatarPopupOpen(true);
@@ -31,7 +30,7 @@ function App() {
   }
   function handleAddPlaceClick() {
     setisAddPlacePopupOpen(true);
-   }
+  }
 
    function handleCardClick(name,link) {
     setSelectedCard({
@@ -46,7 +45,7 @@ function App() {
     setEditProfilePopupOpen(false);
     setisAddPlacePopupOpen(false);
     setSelectedCard({link:'',name:'',isOpen: false})
-   }
+  }
 
   useEffect(() => {
     api.getUser()
@@ -99,6 +98,15 @@ function handleUpdateUser(currentUser) {
     .catch((err) => console.log(`Ошибка: ${err}`));
 
 }
+
+function handleUpdateAvatar(currentUser) {
+  api.editAvatar(currentUser)
+    .then((results) =>{
+      setCurrentUser(results);
+      closeAllPopups()
+    })
+    .catch((err) => console.log(`Ошибка: ${err}`));
+}
   return (
     <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
@@ -125,6 +133,12 @@ function handleUpdateUser(currentUser) {
               onUpdateUser={handleUpdateUser}
               />
 
+            <EditAvatarPopup 
+              isOpen={isEditAvatarPopupOpen} 
+              onClose={closeAllPopups}
+              onUpdateAvatar={handleUpdateAvatar} 
+            />
+
             <PopupWithForm 
               name="popup-addimage" 
               title="Новое место"
@@ -137,15 +151,6 @@ function handleUpdateUser(currentUser) {
                 <span className="popup__link-error popup__error" />
             </PopupWithForm>
 
-            <PopupWithForm 
-              name="popup-update-avatar" 
-              title="Обновить аватар" 
-              isOpen={isEditAvatarPopupOpen}
-              onClose={closeAllPopups}
-            >
-                <input id="popup__link-avatar" className="popup__input" type="url" placeholder="Ссылка" name="avatar" required />
-                <span className="popup__link-avatar-error popup__error" />
-            </PopupWithForm>
 
             <PopupWithForm 
               name="popup-confirm" 

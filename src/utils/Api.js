@@ -45,7 +45,7 @@
     }
 
     //Редактирование аватара
-    editAvatar(data){
+    editAvatar({avatar}){
         return fetch(`${this._address}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
@@ -53,7 +53,7 @@
                 'Content-Type': this._format
             },
             body: JSON.stringify({
-                avatar: data
+                avatar
             })
     })
     .then(this._checkResponse)
