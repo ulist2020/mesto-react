@@ -28,7 +28,7 @@
     }
 
     //Редактирование профиля
-    editUser(data){
+    editUser({ name, about }){
         return fetch(`${this._address}/users/me`, {
             method: 'PATCH',
             headers: {
@@ -36,8 +36,8 @@
                 'Content-Type': this._format
             },
             body: JSON.stringify({
-                name: data.author,
-                about: data.profession
+                name,
+                about
             })
     })
     .then(this._checkResponse)
@@ -100,7 +100,6 @@
         })
         .then(this._checkResponse)
     }
-    
 
     //Удаление лайка
     removeLike(id){
@@ -120,7 +119,7 @@
         }
         return Promise.reject(`Ошибка ${res.status}`);
     }
-
+    //Добавление и удаление лайков
     changeLikeCardStatus(cardId, isLiked){
         if(isLiked){
             return this.addLike(cardId)
