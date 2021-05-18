@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 
 function AddPlacePopup(props) {
     const [name, setName] = useState('');
     const [link, setLink] = useState('');
-
-    const currentUser = React.useContext(CurrentUserContext);
-
-    useEffect(() => {
-    setName(currentUser.name);
-    setLink(currentUser.about);
-    }, [currentUser]);
 
     function handleChangeName(e) {
         setName(e.target.value);
@@ -28,6 +20,8 @@ function AddPlacePopup(props) {
         name,
         link,
         });
+        setName('');
+        setLink('');
     }
     
     
@@ -38,8 +32,10 @@ function AddPlacePopup(props) {
         isOpen={props.isOpen}
         onClose={props.onClose}
         onSubmit={handleSubmit}
+        buttonText='Создать'
       >
           <input 
+          value={name}
           onChange={handleChangeName}
           id="popup__name" 
           className="popup__input" 
@@ -52,6 +48,7 @@ function AddPlacePopup(props) {
           />
           <span className="popup__name-error popup__error" />
           <input
+          value={link}
           onChange={handleChangeLink} 
           id="popup__link" 
           className="popup__input" 

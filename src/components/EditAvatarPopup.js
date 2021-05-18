@@ -11,9 +11,6 @@ function EditProfilePopup(props) {
         });
     }
 
-      function handleChangeAvatar() {
-        return avatarRef.current.value;
-    } 
     
     return (
         <PopupWithForm 
@@ -22,10 +19,10 @@ function EditProfilePopup(props) {
         isOpen={props.isOpen}
         onClose={props.onClose}
         onSubmit={handleSubmit}
+        buttonText='Сохранить'
       >
           <input 
           ref={avatarRef} 
-          onChange={handleChangeAvatar} 
           id="popup__link-avatar" 
           className="popup__input" 
           type="url" 

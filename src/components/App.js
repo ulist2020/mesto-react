@@ -148,13 +148,13 @@ function App() {
               <EditAvatarPopup 
                 isOpen={isEditAvatarPopupOpen} 
                 onClose={closeAllPopups}
-                onUpdateAvatar={handleUpdateAvatar} 
+                onUpdateAvatar={handleUpdateAvatar}
               />
 
               <AddPlacePopup 
                 isOpen={isAddPlacePopupOpen} 
                 onClose={closeAllPopups}
-                onUpdateCards={handleUpdateCards} 
+                onUpdateCards={handleUpdateCards}
               />
 
 
